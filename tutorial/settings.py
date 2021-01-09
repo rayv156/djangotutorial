@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'okta_oauth2.apps.OktaOauth2Config',
     'rest_framework',
 ]
 
@@ -49,6 +50,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'okta_oauth2.middleware.OktaMiddleware'
 ]
 
 ROOT_URLCONF = 'tutorial.urls'
@@ -104,6 +106,20 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+OKTA_AUTH = {
+    "ORG_URL": "https://dev-3042865.okta.com/",
+    "ISSUER": "https://dev-3042865.okta.com/oauth2/default",
+    "CLIENT_ID": "0oa3m5wfkfjA7wCTV5d6",
+    "CLIENT_SECRET": "bienvenidos",
+    "SCOPES": "openid profile email offline_access", # this is the default and can be omitted
+    "REDIRECT_URI": "http://localhost:8000/oauth2/callback",
+    "LOGIN_REDIRECT_URL": "/", # default
+    "CACHE_PREFIX": "okta", # default
+    "CACHE_ALIAS": "default", # default
+    "PUBLIC_NAMED_URLS": (), # default
+    "PUBLIC_URLS": (), # default
+}
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
@@ -123,5 +139,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
+AUTHENTICATION_BACKENDS = ("okta_oauth2.backend.OktaBackend",)
 
 

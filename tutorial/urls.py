@@ -17,10 +17,10 @@ from django.contrib import admin
 
 from django.urls import include, path
 from rest_framework import routers
-from tutorial.quickstart import views
 
 
 
 urlpatterns = [
     path('', include('myapi.urls')),
+    path('accounts/', include(("okta_oauth2.urls", "okta_oauth2"), namespace="okta_oauth2")),
 ]
